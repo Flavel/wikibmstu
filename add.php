@@ -55,7 +55,8 @@ echo('
 	<input type="text" name = "name"  value = ' . $name . '>
 	<br>
 	<textarea name = "Text" cols = "40" rows = "40">'. $text .'</textarea>
-	<input type="submit"  name = "submit" value="Добавить">
+	<p><input type="submit"  name = "submit" value="Добавить"></p>
+	<a href = "/library.php">Назад</a>
 </form>
 ');
 ?>

@@ -11,7 +11,7 @@ ob_start();
 		header('Location: '.$_SESSION['url']);
 		ob_end_flush();
 	}
-	
+
 	$host = 'localhost';
     $user = 'root';
     $pass = 'admin';
@@ -29,6 +29,9 @@ ob_start();
 		$sql = mysqli_query($link, "SELECT * FROM `users` WHERE username = '$name' AND password = '$passw'");
 		if(mysqli_num_rows($sql) == 1){
 			$new_url = $_SESSION['url'];
+			if(!$_SESSION['url']){
+				$_SESSION['url'] = '/library.php';
+			}
 			echo($new_url);
 			$_SESSION['id'] = mysqli_fetch_array($sql)['id'];
 			header('Location: '.$_SESSION['url']);
