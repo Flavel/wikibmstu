@@ -2,11 +2,15 @@
 session_start();
 ob_start();
 ?>
-<H1> ВХОД </H1>
 
 
 <?php
+	$str = htmlentities(file_get_contents("login.html"));
+	$str = str_replace ( "&lt;" , "<" , $str );
+    $str = str_replace ( "&gt;" , ">" , $str );
 
+    $warning = "<p>" . $_SESSION['warning'] . "</p>"; 
+    $_SESSION['warning'] = "";
 	if($_SESSION['id'] != NULL){
 		header('Location: '.$_SESSION['url']);
 		ob_end_flush();
@@ -38,20 +42,18 @@ ob_start();
 			ob_end_flush();
 
 		} else {
-			echo('Неверный пароль');
+			$warning = 'Неверный пароль';
 			$err = true;
 		}
 	}
 
+	$str = str_replace ( "%name%" , $name , $str );
+	$str = str_replace ( "%passw%" , $passw , $str );
+	$str = str_replace ("%warning%", $warning, $str );
+	$str = str_replace ( "&quot;" , '"' , $str );
 	if (($err == true) || ($_POST['submit'] == NULL)){
-		echo "	<form action='login.php' method='POST'>
-				Имя пользователя</br>
-				<input type='text' name='username' value = '$name'></br>
-				Пароль<br>
-				<input type='password' name='password' value = '$passw'></br>
-				<input type='submit' name='submit' value='войти''>
-				</form>
-				<a href = '/register.php'> У меня нет аккаунта. </a>
-				";
+		echo $str;
 	}
 ?>
+</body>
+</html>

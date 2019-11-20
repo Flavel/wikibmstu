@@ -1,7 +1,10 @@
 <?php
 	session_start();
 	ob_start();
-	echo('<h1> Регистрация</h1>');
+	$str = htmlentities(file_get_contents("reg.html"));
+	$str = str_replace ( "&lt;" , "<" , $str );
+    $str = str_replace ( "&gt;" , ">" , $str );
+
 	if($_SESSION['id'] != NULL){
 			header('Location: '.$_SESSION['url']);
 			ob_end_flush();
@@ -20,6 +23,7 @@
 	$passw1 = $_POST['password1'];
 	$passw2 = $_POST['password2'];
 	$err = false;
+
 	if($_POST['submit'] != NULL){
 		$sql = mysqli_query($link, "SELECT * FROM users WHERE username = '" . $name . "'");
 		if(mysqli_fetch_array($sql)){
@@ -28,33 +32,28 @@
 		}
 
 		if ($name == ""){
-			echo('<p>Введите имя</p>');
+			$warning = $warning . '<p>Введите имя</p>';
 			$err = true;
 		}
 		if ($passw1 == ""){
-			echo('<p>Введите пароль</p>');
+			$warning = $warning . '<p>Введите пароль</p>';
 			$err = true;
 		} else {
 			if ($passw1 != $passw2){
-				echo('<p>Пароли не совпадают</p>');
+				$warning = $warning . '<p>Пароли не совпадают</p>';
 				$err = true;
 			}
 		}
-
 	}
+	$str = str_replace ( "%warning%" , $warning , $str );
 
 	if(($err == true) || ($_POST['submit'] == NULL)){
-		echo(
-	"<form action='register.php' method = 'POST'>
-		Имя пользователя</br>
-		<input type='text' name='name' value = '$name'></br>
-		Пароль<br>
-		<input type='password1' name='password1' value = '$passw1'></br>
-		Пароль<br>
-		<input type='password2' name='password2' value = '$passw2'></br>
-		<input type='submit' value = 'OK' name = 'submit'></br>
-		<a href = '/login.php'>У меня уже есть аккаунт.</a>
-	</form>");
+		$str = str_replace ( "%name%" , $name , $str );
+		$str = str_replace ( "%passw1%" , $passw1 , $str );
+		$str = str_replace ( "%passw2%" , $passw2 , $str );
+		$str = str_replace ( "&quot;" , '"' , $str );
+
+		echo($str);
 	} else {
 
 		$sql = mysqli_query($link, "INSERT INTO `users` (`username`, `password`) VALUES ('{$name}', '{$passw2}')");

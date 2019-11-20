@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='style.css'>
+	<title></title>
+</head>
+<body>
+	<span class = 'topmenu'>
+		<a href = '/library.php'>Список преподавателей</a>
+		Читать
+		<a href = '/edit.php?id=%id%'>Редактировать</a>
+
+		<div class = "username">%username%</div>
+	</span>
+
+	<span class = 'description'>
+		<img src='%src%' alt = '%alt%'><br>
+		<table>
+			<tr><td>Кафедра: </td><td>%Кафедра%</td></tr>
+			<tr><td>Ведет: </td><td>%Предметы%</td></tr>
+			<tr><td  colspan="2">Оценка</td></tr>
+		</table>
+	</span>
+	<span class = 'content'>
+		<h1>%name%</h1>
+		<p>%text%</p>
+	</span>
+</body>
+</html>

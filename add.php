@@ -2,11 +2,34 @@
 	session_start();
 	ob_start();
 
+
+	$str = htmlentities(file_get_contents("add.html"));
+	$str = str_replace ( "&lt;" , "<" , $str );
+    $str = str_replace ( "&gt;" , ">" , $str );
+    $str = str_replace ( "&quot;" , '"' , $str );
+
+
+    $host = 'localhost';
+    $user = 'root';
+    $pass = 'admin';
+    $db_name = 'auth';
+    $linkUsr = mysqli_connect($host, $user, $pass, $db_name);
+
+    if($_SESSION['id'] != NULL){
+    	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
+    	$result1 = mysqli_fetch_array($sql);
+		$str = str_replace ( "%username%" , "<a href = ''>". $result1['username'] . "</a><a href = '/library.php?exit=Выход'>выход</a>" , $str );
+	} else {
+		$str = str_replace('%username%', "<a href = '/login.php'>Войти</a> <a href = 'register'>Регистрация</a>", $str);
+    	$_SESSION['url'] = '/library.php';
+	}
+
 	if ($_SESSION['id'] == NULL){
+		$_SESSION['url'] = 'add.php';
+		$_SESSION['warning'] = 'Чтобы добавить, пожалуйста, авторизируйтесь.';
 		$new_url = '/login.php';
 		header('Location: '.$new_url);
 		ob_end_flush();
-		$_SESSION['url'] = 'add.php';
 	}
 	$name = $_POST['name'];
 	$text = $_POST['Text'];
@@ -44,19 +67,11 @@
     		exit();
     	}
 	} else {
-		echo 'Имя или текст не введен';
+		$warning = 'Имя или текст не введен';
 	}
 
-echo('
-<form action = "add.php" method = "POST" enctype="multipart/form-data">
-	фото<br>
-	<input type = "file" name = "img" accept="image/png">
-	<br>имя<br>
-	<input type="text" name = "name"  value = ' . $name . '>
-	<br>
-	<textarea name = "Text" cols = "40" rows = "40">'. $text .'</textarea>
-	<p><input type="submit"  name = "submit" value="Добавить"></p>
-	<a href = "/library.php">Назад</a>
-</form>
-');
+	$str = str_replace ( "%name%" , $name , $str );
+	$str = str_replace ( "%text%" , $text , $str );
+	$str = str_replace ( "%warning%" , $warning , $str );
+echo $str;
 ?>

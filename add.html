@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel='stylesheet' href='style.css'>
+	<title></title>
+</head>
+<body>
+	<span class = 'topmenu'>
+		<a href = '/library.php'>Список преподавателей</a>
+		<div class = "username"> %username% </div>
+	</span>
+	<span class = 'content'>
+		%warning%
+		<form action = 'add.php' method = 'POST' enctype='multipart/form-data'>
+			фото<br>
+			<input type = 'file' name = 'img' accept='image/png'>
+			<span class = 'content'>
+			<h1><input type = 'text' name = 'name' value = '%name%'></h1>
+			<textarea name = 'Text' cols = '100' rows = '40'>%text%</textarea>
+			<p><input type='submit'  name = 'submit' value='Добавить'></p>
+		</form>
+	</span>
+</body>
+</html>
