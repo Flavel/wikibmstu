@@ -56,13 +56,17 @@
     		echo("Успех");
     		$sql = mysqli_query($link, "SELECT * FROM `posts`;");
     		echo($_FILES['img'] != NULL);
-    		if ($_FILES['img'] != NULL){
-    			move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . (mysqli_num_rows($sql) + 1) . ".png");
-    		}	
 
     		$sql = mysqli_query($link, "INSERT INTO `posts` (`text`, `name`, `userid`) VALUES ('{$text}', '{$name}', '{$_SESSION['id']}')");
+
+ 	   		if ($_FILES['img'] != NULL){
+ 	   			$sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY id DESC LIMIT 1");
+    			move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . (mysqli_fetch_array($sql)['id']) . ".png");
+    		}	
+
+
     		$new_url = '/library.php';
-			header('Location: '.$new_url);
+			//header('Location: '.$new_url);
 			ob_end_flush();
     		exit();
     	}
