@@ -15,7 +15,15 @@
     $link = mysqli_connect($host, $user, $pass, $db_name);
 
     if($_POST['submit']){
-     $sql = mysqli_query($link, "UPDATE `posts` SET `name` = '" . $_POST['name'] . "', `text` ='" . $_POST['Text'] . "' WHERE `id` = '".$_GET['id']."'");
+
+    	if ($_FILES['img'] != NULL){
+    		move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . $_GET['id'] . ".png");
+    	}	
+
+    	$sql = mysqli_query($link, "UPDATE `posts` SET `name` = '" . $_POST['name'] . "', `text` ='" . $_POST['Text'] . "' WHERE `id` = '".$_GET['id']."'");
+	 	$new_url = '/post.php?id=' . $_GET['id'];
+ 	 	header('Location: '.$new_url);
+	 	ob_end_flush();
     }
 
 ?>

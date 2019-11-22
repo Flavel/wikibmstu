@@ -5,25 +5,22 @@
 	<title></title>
 </head>
 <body>
+	<form action = '' method = 'POST' enctype='multipart/form-data'>
 	<span class = 'topmenu'>
 		<a href = '/library.php'>Список преподавателей</a>
 		<a href = '/post.php?id=%id%'>Читать</a>
-		Редактировать
+		<span class = 'el'>Редактировать</span>
 
 		<div class = "username">%username%</div>
 	</span>
-	<form action = '' method = 'POST'>
 	<span class = 'description'>
 		<img src='%src%' alt = '%alt%'><br>
-		<table>
-			<tr><td>Кафедра: </td><td>%Кафедра%</td></tr>
-			<tr><td>Ведет: </td><td>%Предметы%</td></tr>
-			<tr><td  colspan="2">Оценка</td></tr>
-		</table>
+		<input type = 'file' name = 'img' accept='image/png'>
 	</span>
 	<span class = 'content'>
 		<h1><input type = 'text' name = 'name' value = '%name%'></h1>
 		<textarea name = 'Text' cols = '100' rows = '40'>%text%</textarea>
 		<p><input type='submit'  name = 'submit' value='Изменить'></p>
 	</span>
+	</form>
 </body>

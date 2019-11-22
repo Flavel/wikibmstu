@@ -15,6 +15,30 @@
     $db_name = 'auth';
     $linkUsr = mysqli_connect($host, $user, $pass, $db_name);
 
+
+    $host = 'localhost';
+    $user = 'root';
+    $pass = 'admin';
+    $db_name = 'post';
+    $link = mysqli_connect($host, $user, $pass, $db_name);
+
+
+    $host = 'localhost';
+    $user = 'root';
+   	$pass = 'admin';
+   	$db_name = 'comments';
+
+    $linkComment = mysqli_connect($host, $user, $pass, $db_name);
+    if (!$linkComment) {
+     	echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
+   	  	exit;
+  	}
+
+
+    if (!$link) {
+      echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
+      exit;
+    }
     if($_SESSION['id'] != NULL){
     	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
     	$result1 = mysqli_fetch_array($sql);
@@ -34,15 +58,7 @@
 	$name = $_POST['name'];
 	$text = $_POST['Text'];
 
-	$host = 'localhost';
-    $user = 'root';
-    $pass = 'admin';
-    $db_name = 'post';
-    $link = mysqli_connect($host, $user, $pass, $db_name);
-    if (!$link) {
-      echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
-      exit;
-    }
+
 
 
 
@@ -64,9 +80,21 @@
     			move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . (mysqli_fetch_array($sql)['id']) . ".png");
     		}	
 
+    		$sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY id DESC LIMIT 1");
+    		$postid = mysqli_fetch_array($sql)['id'];
+			echo 'postid= ' . $postid;
 
-    		$new_url = '/library.php';
-			//header('Location: '.$new_url);
+
+			$query ="CREATE Table `$postid` (
+ 				`id` int(11) NOT NULL AUTO_INCREMENT,
+ 				`userid` int(11) NOT NULL,
+ 				`text` varchar(512) NOT NULL,
+ 				`trn_date` datetime NOT NULL,
+ 				PRIMARY KEY (`id`))";
+
+    		$sql = mysqli_query($linkComment, $query);
+    		$new_url = '/post.php?id=' . $postid;
+			header('Location: '.$new_url);
 			ob_end_flush();
     		exit();
     	}
