@@ -4,17 +4,18 @@ span {
 .description {
 	padding : 10px;
 	background-color: lightgray;
-	width : 20%;
+	width : 328px;
 	float: right;
-	margin-right: 10%; 
+	margin-right: 7%; 
 	text-align:center;
+	font-size: 95%;
 }
 img {
 	width : 90%;
 }
 .content {
 	width : 60%;
-	margin-left: 5%;
+	margin-left: 4%;
 }
 table {
 	width : 100%;
@@ -55,5 +56,3 @@ a {
 	word-break: break-word;
 	min-height: 200px;
 }
-
-

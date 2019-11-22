@@ -52,21 +52,97 @@
     }
 
     if($_GET['knowledge']){
-        
-        $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `знание`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['knowledge']}')");
+        $sql1 = mysqli_query($link, "SELECT * FROM `assessments` WHERE `postid` = '" . $_GET['id'] . "' and `userid` = '" . $_SESSION['id'] . "'");
+        if(mysqli_num_rows($sql1) >= 1){
+           $sql = mysqli_query($link, "UPDATE `assessments` SET `знание` = '" . $_GET['knowledge'] . "' WHERE `postid` = '".$_GET['id']."' and `userid` = '".$_SESSION['id']."'");
+        } else {
+            $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `знание`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['knowledge']}')");
+        }
     }
     if($_GET['teaching_skills']){
-        $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `умение`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['teaching_skills']}')");
+            //$sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `умение`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['teaching_skills']}')");
+
+        $sql1 = mysqli_query($link, "SELECT * FROM `assessments` WHERE `postid` = '" . $_GET['id'] . "' and `userid` = '" . $_SESSION['id'] . "'");
+        if(mysqli_num_rows($sql1) >= 1){
+           $sql = mysqli_query($link, "UPDATE `assessments` SET `умение` = '" . $_GET['teaching_skills'] . "' WHERE `postid` = '".$_GET['id']."' and `userid` = '".$_SESSION['id']."'");
+        } else {
+            $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `умение`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['teaching_skills']}')");
+        }
     }
     if($_GET['communication_skills']){
-        $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `общение`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['communication_skills']}')");
+        //$sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `общение`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['communication_skills']}')");
+        $sql1 = mysqli_query($link, "SELECT * FROM `assessments` WHERE `postid` = '" . $_GET['id'] . "' and `userid` = '" . $_SESSION['id'] . "'");
+        if(mysqli_num_rows($sql1) >= 1){
+           $sql = mysqli_query($link, "UPDATE `assessments` SET `общение` = '" . $_GET['communication_skills'] . "' WHERE `postid` = '".$_GET['id']."' and `userid` = '".$_SESSION['id']."'");
+        } else {
+            $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `общение`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['communication_skills']}')");
+        }
     }
     if($_GET['easiness']){
-        $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `халявность`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['easiness']}')");
+        //$sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `халявность`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['easiness']}')");
+        $sql1 = mysqli_query($link, "SELECT * FROM `assessments` WHERE `postid` = '" . $_GET['id'] . "' and `userid` = '" . $_SESSION['id'] . "'");
+        if(mysqli_num_rows($sql1) >= 1){
+           $sql = mysqli_query($link, "UPDATE `assessments` SET `халявность` = '" . $_GET['easiness'] . "' WHERE `postid` = '".$_GET['id']."' and `userid` = '".$_SESSION['id']."'");
+        } else {
+            $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `халявность`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['easiness']}')");
+        }
     }
     if($_GET['assessment']){
-        $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `оценка`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['assessment']}')");
+        //$sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `оценка`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['assessment']}')");
+        $sql1 = mysqli_query($link, "SELECT * FROM `assessments` WHERE `postid` = '" . $_GET['id'] . "' and `userid` = '" . $_SESSION['id'] . "'");
+        if(mysqli_num_rows($sql1) >= 1){
+           $sql = mysqli_query($link, "UPDATE `assessments` SET `оценка` = '" . $_GET['assessment'] . "' WHERE `postid` = '".$_GET['id']."' and `userid` = '".$_SESSION['id']."'");
+        } else {
+            $sql = mysqli_query($link, "INSERT INTO `assessments` (`userid`, `postid`, `оценка`) VALUES ('{$_SESSION['id']}', '{$_GET['id']}', '{$_GET['assessment']}')");
+        }
     }
+    $sum_knowledge = 0;
+    $sum_teaching_skills = 0;
+    $sum_communication_skills = 0;
+    $sum_easiness = 0;
+    $sum_assessment = 0;
+
+    $sql = mysqli_query($link, "SELECT count(знание) FROM `assessments` WHERE postid = " . $_GET['id']);
+    $row = mysqli_fetch_row($sql);
+    $c_knowledge = $row[0];
+
+    $sql = mysqli_query($link, "SELECT count(умение) FROM `assessments` WHERE postid = " . $_GET['id']);
+    $row = mysqli_fetch_row($sql);
+    $c_teaching_skills = $row[0];
+
+    $sql = mysqli_query($link, "SELECT count(общение) FROM `assessments` WHERE postid = " . $_GET['id']);
+    $row = mysqli_fetch_row($sql);
+    $c_communication_skills = $row[0];
+
+    $sql = mysqli_query($link, "SELECT count(халявность) FROM `assessments` WHERE postid = " . $_GET['id']);
+    $row = mysqli_fetch_row($sql);
+    $c_easiness = $row[0];
+
+    $sql = mysqli_query($link, "SELECT count(оценка) FROM `assessments` WHERE postid = " . $_GET['id']);
+    $row = mysqli_fetch_row($sql);
+    $c_assessment = $row[0];
+    //}
+
+    $sql1 = mysqli_query($link, "SELECT * FROM `assessments` WHERE `postid` = '" . $_GET['id'] . "'");
+    while($res = mysqli_fetch_array($sql1)){
+        $sum_knowledge += $res['знание'];
+        $sum_teaching_skills += $res['умение'];
+        $sum_communication_skills += $res['общение'];
+        $sum_easiness += $res['халявность'];
+        $sum_assessment += $res['оценка'];
+    }
+        $str = str_replace ( "%оценкаЗ%" , ($c_knowledge > 0) ? round($sum_knowledge / $c_knowledge, 1) : "нет" , $str );
+        $str = str_replace ( "%оценкаУ%" , ($c_teaching_skills > 0) ? round($sum_teaching_skills / $c_teaching_skills,1) : "нет" , $str );
+        $str = str_replace ( "%оценкаВ%" , ($c_communication_skills > 0) ? round($sum_communication_skills / $c_communication_skills,1) : "нет" , $str );
+        $str = str_replace ( "%оценкаХ%" , ($c_easiness > 0) ? round($sum_easiness / $c_easiness,1) : "нет" , $str );
+        $str = str_replace ( "%оценкаО%" , ($c_assessment > 0) ? round($sum_assessment / $c_assessment,1) : "нет" , $str );
+        
+        $str = str_replace ( "%количествоЗ%" , $c_knowledge , $str );
+        $str = str_replace ( "%количествоУ%" , $c_teaching_skills, $str );
+        $str = str_replace ( "%количествоВ%" , $c_communication_skills , $str );
+        $str = str_replace ( "%количествоХ%" , $c_easiness , $str );
+        $str = str_replace ( "%количествоО%" , $c_assessment , $str );  
+
 
     //комментарии
     $host = 'localhost';
@@ -81,9 +157,16 @@
         $comment = str_replace ( "&lt;" , "<" , $comment );
         $comment = str_replace ( "&gt;" , ">" , $comment );
         $comment = str_replace ( "&quot;" , '"' , $comment );
-    
+        $sqlUsr = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $result2['userid']);
         $comment = str_replace ( "%text%" , $result2['text'] , $comment);
         $comment = str_replace ( "%date%" , $result2['trn_date'] , $comment);
+        
+        $userid = mysqli_fetch_array($sqlUsr)['username'];
+        if($userid == 'Аноним'){
+            $comment = str_replace ( "%src%" , "https://api.adorable.io/avatars/180/". $result2['trn_date'], $comment);
+        } else {
+            $comment = str_replace ( "%src%" , "https://api.adorable.io/avatars/180/". sha1($userid), $comment);
+        }
 
         $sqlUsr = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $result2['userid']);
         $comment = str_replace ( "%username%" , mysqli_fetch_array($sqlUsr)['username'] , $comment);

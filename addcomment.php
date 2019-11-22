@@ -14,19 +14,19 @@
       echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
       exit;
   	}
+
   	if($_SESSION['id'] == NULL){
-  		$_SESSION['url'] = '/post.php?id=' . $postid;
-  		$_SESSION['warning'] = 'Чтобы оставлять комментарии, пожалуйста, войдите в учетную запись.';
-  		header('Location: /login.php');
-		ob_end_flush();
+  		$userid = 21;
   	} else {
-  		$t = date("Y/m/d");
+      $userid = $_SESSION['id'];
+    }
+  		$t = date("Y/m/d H:i:s");
   		echo($t);
   		if($comment != ""){
-     		$sql = mysqli_query($link, "INSERT INTO `" . $postid . "` (`text`, `userid`, `trn_date`) VALUES ('{$comment}', '{$_SESSION['id']}', '{$t}')" );
+     		$sql = mysqli_query($link, "INSERT INTO `" . $postid . "` (`text`, `userid`, `trn_date`) VALUES ('{$comment}', '{$userid}', '{$t}')" );
      	}
   		header('Location: /post.php?id=' . $postid);
 		ob_end_flush();
-  	}
+  	
 
 ?>
