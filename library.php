@@ -35,15 +35,52 @@
       echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
       exit;
     }
-    $sql = mysqli_query($link, "SELECT * FROM posts");
+    
     $str = str_replace ( "&lt;" , "<" , $str );
     $str = str_replace ( "&gt;" , ">" , $str );
     $str = str_replace ( "&quot;" , '"' , $str );
 
-    $text = $text . "<h1>Все</h1>";
-    while ($result = mysqli_fetch_array($sql)) {
-      $text = $text . "<p><a href = 'post.php?id={$result['id']}' >{$result['id']}. {$result['name']}</a></p>";
-  	}
-  	$str = str_replace('%content%', $text, $str);
+    //халявные
+    $sql = mysqli_query($link, "SELECT * from posts ORDER BY `posts`.`халявность` DESC LIMIT 3");
+    $i = 1;
+    while($result = mysqli_fetch_array($sql)){
+      $sql1 = mysqli_query($link, "SELECT count(халявность) FROM `assessments` WHERE postid = " . $result['id']);
+      $str = str_replace('%e' . $i . '%', '<a href = "/post.php?id=' . $result['id'] .'">' . $result['name'] . '</a> ' . $result['халявность'] . '(' . mysqli_fetch_row($sql1)[0] . ' голосов)', $str);
+      $i++;
+    }
+
+    //строгие
+    $sql = mysqli_query($link, 'SELECT * FROM `posts` WHERE `халявность` != 0 ORDER BY `халявность` ASC LIMIT 3');
+    $i = 1;
+    while($result = mysqli_fetch_array($sql)){
+      $sql1 = mysqli_query($link, "SELECT count(халявность) FROM `assessments` WHERE postid = " . $result['id']);
+      $str = str_replace('%s' . $i . '%', '<a href = "/post.php?id=' . $result['id'] .'">' . $result['name'] . '</a> ' . $result['халявность'] . '(' . mysqli_fetch_row($sql1)[0] . ' голосов)', $str);
+      $i++;
+    }
+    //последние комментарии
+    $host = 'localhost';
+    $user = 'root';
+    $pass = 'admin';
+    $db_name = 'comments';
+    $linkComments = mysqli_connect($host, $user, $pass, $db_name);
+
+    $sql = mysqli_query($linkComments, 'SELECT * FROM `last`');
+    $result = mysqli_fetch_array($sql);
+    for($i = 1; $i < 11; $i++){
+        $sql = mysqli_query($link, 'SELECT * FROM `posts` WHERE `id` = ' . $result[$i]);
+        $str = str_replace('%last' . (11 - $i) . '%', '<a href = "/post.php?id=' . $result[$i] . '">' . mysqli_fetch_array($sql)['name'] . '</a>', $str);
+    }
+    //последние страницы
+    $sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY `posts`.`id` DESC LIMIT 10");
+    $i = 1;
+    while($result = mysqli_fetch_array($sql)){
+      $sql1 = mysqli_query($link, "SELECT count(халявность) FROM `assessments` WHERE postid = " . $result['id']);
+      $str = str_replace('%new' . $i . '%', '<a href = "/post.php?id=' . $result['id'] .'">' . $result['name'] . '</a>', $str);
+      $i++;
+    }
+
+
+
+    $str = str_replace('%rand%', rand(0, 100000), $str);
   	echo($str);
 ?>

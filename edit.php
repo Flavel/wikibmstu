@@ -2,6 +2,9 @@
 	session_start();
 	ob_start();
 
+    
+
+
 	$str = htmlentities(file_get_contents("edit.html"));
 	$str = str_replace ( "&lt;" , "<" , $str );
     $str = str_replace ( "&gt;" , ">" , $str );
@@ -20,7 +23,7 @@
     		move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . $_GET['id'] . ".png");
     	}	
 
-    	$sql = mysqli_query($link, "UPDATE `posts` SET `name` = '" . $_POST['name'] . "', `text` ='" . $_POST['Text'] . "' WHERE `id` = '".$_GET['id']."'");
+    	$sql = mysqli_query($link, "UPDATE `posts` SET `name` = '" . $_POST['name'] . "', `text` ='" . $_POST['Text'] . "', `department` = '" . $_POST['department'] . "' WHERE `id` = '".$_GET['id']."'");
 	 	$new_url = '/post.php?id=' . $_GET['id'];
  	 	header('Location: '.$new_url);
 	 	ob_end_flush();
@@ -33,7 +36,7 @@
 
 
     if(file_exists('img/' . $_GET["id"] . '.png')){
-    	$way = '/img/' . $_GET["id"] . '.png';
+    	$way = '/img/' . $_GET["id"] . '.png?no_cache=' . rand(0,1000000);
     } else {
     	$way = '/img/whoisit.png';
     }
@@ -54,17 +57,21 @@
 	} else {
 		$str = str_replace('%username%', "<a href = '/login.php'>Войти</a> <a href = 'register'>Регистрация</a>", $str);
     	$_SESSION['url'] = '/edit.php?id='.$_GET['id'];
-    	$_SESSION['warning'] = 'Чтобы редактировать, пожалуйста, авторизируйтесь.';
+    	$_SESSION['warning'] = 'Чтобы редактировать, пожалуйста, представьтесь.';
     	$new_url = '/login.php';
 		header('Location: '.$new_url);
 		ob_end_flush();
 	}
+    $str = str_replace ( 'option value = "' . $result["department"] . '"' , 'option selected value = "' . $result["department"] . '"' , $str );
 
     $str = str_replace ( "%src%" , $way , $str );
     $str = str_replace ( "%text%" , $result["text"] , $str );
     $str = str_replace ( "%name%" , $result["name"] , $str );
     $str = str_replace ( "%id%" , $_GET['id'] , $str );
+    $str = str_replace('%rand%', rand(0, 100000), $str);
     echo $str;
 
 	?>
+
+
 	

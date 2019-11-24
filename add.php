@@ -50,7 +50,7 @@
 
 	if ($_SESSION['id'] == NULL){
 		$_SESSION['url'] = 'add.php';
-		$_SESSION['warning'] = 'Чтобы добавить, пожалуйста, авторизируйтесь.';
+		$_SESSION['warning'] = 'Чтобы добавить, пожалуйста, представьтесь.';
 		$new_url = '/login.php';
 		header('Location: '.$new_url);
 		ob_end_flush();
@@ -70,10 +70,11 @@
     		echo "Размер картинки превышает 3 Мб";
     	} else {
     		echo("Успех");
-    		$sql = mysqli_query($link, "SELECT * FROM `posts`;");
-    		echo($_FILES['img'] != NULL);
+    		$sql = mysqli_query($link, "SELECT * FROM `posts`");
+    		//echo($_FILES['img'] != NULL);
 
-    		$sql = mysqli_query($link, "INSERT INTO `posts` (`text`, `name`, `userid`) VALUES ('{$text}', '{$name}', '{$_SESSION['id']}')");
+    		$sql = mysqli_query($link, "INSERT INTO `posts` (`text`, `name`, `userid`, `department`) VALUES ('{$text}', '{$name}', '{$_SESSION['id']}', '{$_POST['department']}')");
+            
 
  	   		if ($_FILES['img'] != NULL){
  	   			$sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY id DESC LIMIT 1");
@@ -85,7 +86,7 @@
 			echo 'postid= ' . $postid;
 
 
-			$query ="CREATE Table `$postid` (
+			$query ="CREATE Table IF NOT EXISTS `$postid` (
  				`id` int(11) NOT NULL AUTO_INCREMENT,
  				`userid` int(11) NOT NULL,
  				`text` varchar(512) NOT NULL,
@@ -107,3 +108,5 @@
 	$str = str_replace ( "%warning%" , $warning , $str );
 echo $str;
 ?>
+
+

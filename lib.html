@@ -1,17 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style.css?%rand%">
 	<title></title>
+	<meta charset="utf-8">
 </head>
 <body>
 	<span class = 'topmenu'>
 		<span class = 'el'> Список преподавателей </span>
-		<a href = 'add.php'> Добавить </a>
-		<div class = "username">%username%</div>
+		<span class = 'el'><a href = 'add.php'> Добавить </a></span>
+		<div class = "username">
+			<span>
+			<form action = "">
+				<input type="text" name="request" placeholder="Поиск">
+				<input type="submit" hidden="">
+			</form></span>
+		%username%</div>
 	</span>
-	<span>
-		%content%
-	</span>
+
+	<div class = "mainpage">
+		<h2> Добро пожаловать на wikibmstu</h2>
+		<div>
+			<span>
+				<h3>Преводаватели</h3>
+				<span>
+				<h4>Самые халявные</h4>
+				<ul>
+					<li>%e1%</li>
+					<li>%e2%</li>
+					<li>%e3%</li>
+					<a href = "/rating.php">еще...</a>
+				</ul>
+			</span><span>
+				<h4>Самые строгие</h4>
+				<ul>
+					<li>%s1%</li>
+					<li>%s2%</li>
+					<li>%s3%</li>
+					<a href = "/rating.php">еще...</a>
+				</ul>
+			</span>
+			</span>
+		</div>
+		<div>
+			<span>
+				<span>
+				<h4>Последние комментарии</h4>
+				<ul>
+					<li>%last1%</li>
+					<li>%last2%</li>
+					<li>%last3%</li>
+					<li>%last4%</li>
+					<li>%last5%</li>
+					<li>%last6%</li>
+					<li>%last7%</li>
+					<li>%last8%</li>
+					<li>%last9%</li>
+					<li>%last10%</li>
+				</ul>
+			</span><span>
+				<h4>Новые страницы</h4>
+				<ul>
+					<li>%new1%</li>
+					<li>%new2%</li>
+					<li>%new3%</li>
+					<li>%new4%</li>
+					<li>%new5%</li>
+					<li>%new6%</li>
+					<li>%new7%</li>
+					<li>%new8%</li>
+					<li>%new9%</li>
+					<li>%new10%</li>
+				</ul>
+			</span>
+			</span>
+		</div>
+	</div>
 </body>
 </html>

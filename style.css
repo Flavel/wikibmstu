@@ -1,5 +1,6 @@
 span {
 	display: inline-block;
+	vertical-align:top;
 }
 .description {
 	padding : 10px;
@@ -32,13 +33,14 @@ table {
 	float: right;
 	margin-right: 6%; 
 }
-a {
-	margin: 5px;
-}
+
 .el{
 	margin: 5px;
-}
 
+}
+.username a {
+	margin: 5px;
+}
 .comment{
 	width: 50%;
 	margin-left: 5%;
@@ -55,4 +57,21 @@ a {
 	width:65%;
 	word-break: break-word;
 	min-height: 200px;
+}
+select{
+	width:200px;
+}
+.annotation{
+	font-size: 7;
+	color : gray;
+}
+.mainpage {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.mainpage span {
+	margin: 10px;
+}
+.mainpage h4 {
+	margin-top: 0px;
 }
