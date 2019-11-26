@@ -75,3 +75,9 @@ select{
 .mainpage h4 {
 	margin-top: 0px;
 }
+.ass a {
+	margin:1px;
+}
+.ass img {
+	width:15px;
+}

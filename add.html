@@ -6,8 +6,14 @@
 </head>
 <body>
 	<span class = 'topmenu'>
-		<span class = 'el'><a href = '/library.php'>Список преподавателей</a></span> <span class = 'el'>Добавить</span>
-		<div class = "username"> %username% </div>
+		<span class = 'el'><a href = '/library.php'>Главная</a></span> <span class = 'el'>Добавить</span>
+		<div class = "username">
+			<span>
+			<form action = "/search.php">
+				<input type="text" name="request" placeholder="Поиск">
+				<input type="submit" hidden="">
+			</form></span>
+		%username%</div>
 	</span>
 		<form action = 'add.php' method = 'POST' enctype='multipart/form-data'>
 			<span class = 'description'>

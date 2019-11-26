@@ -7,14 +7,23 @@
 	<title></title>
 </head>
 <body>
-	<form action = '' method = 'POST' enctype='multipart/form-data'>
+	
 	<span class = 'topmenu'>
-		<span class = 'el'><a href = '/library.php'>Список преподавателей</a></span>
+		<span class = 'el'><a href = '/library.php'>Главная</a></span>
 		<span class = 'el'><a href = '/post.php?id=%id%'>Читать</a></span>
 		<span class = 'el'>Редактировать</span>
 
-		<div class = "username">%username%</div>
+		<div class = "username">
+			<span>
+			<form action = "/search.php">
+				<input type="text" name="request" placeholder="Поиск">
+				<input type="submit" hidden="">
+			</form></span>
+		%username%</div>
 	</span>
+
+
+	<form action = '' method = 'POST' enctype='multipart/form-data'>
 	<span class = 'description'>
 		<img id = "preview" src='%src%' alt = '%alt%'><br>
 		<input id = 'id_files' type = 'file' name = 'img' accept='image/png'><br>

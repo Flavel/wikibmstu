@@ -68,7 +68,7 @@
     $str = str_replace ( "%text%" , $result["text"] , $str );
     $str = str_replace ( "%name%" , $result["name"] , $str );
     $str = str_replace ( "%id%" , $_GET['id'] , $str );
-    $str = str_replace('%rand%', rand(0, 100000), $str);
+    $str = str_replace('%rand%', rand(0, 10000), $str);
     echo $str;
 
 	?>

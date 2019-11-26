@@ -9,11 +9,17 @@
 </head>
 <body>
 	<span class = 'topmenu'>
-		<span class = 'el'><a href = '/library.php'>Список преподавателей</a></span>
+		<span class = 'el'><a href = '/library.php'>Главная</a></span>
 		<span class = 'el'>Читать</span>
 		<span class = 'el'><a href = '/edit.php?id=%id%'>Редактировать</a></span>
 
-		<div class = "username">%username%</div>
+		<div class = "username">
+			<span>
+			<form action = "/search.php">
+				<input type="text" name="request" placeholder="Поиск">
+				<input type="submit" hidden="">
+			</form></span>
+		%username%</div>
 	</span>
 
 	<span class = 'description'>
@@ -24,11 +30,11 @@
 			<tr><td  colspan="2">
 				<div class = "ass">
 				<table>
-				<tr><td>Знания</td>				<td><a href = "/post.php?id=%id%&knowledge=1">1</a><a href = "/post.php?id=%id%&knowledge=2">2</a><a href = "/post.php?id=%id%&knowledge=3">3</a><a href = "/post.php?id=%id%&knowledge=4">4</a><a href = "/post.php?id=%id%&knowledge=5">5</a> 														%оценкаЗ% (%количествоЗ% голосов)</td></tr>
-				<tr><td>Умение преподавать		<td><a href = "/post.php?id=%id%&teaching_skills=1">1</a><a href = "/post.php?id=%id%&teaching_skills=2">2</a><a href = "/post.php?id=%id%&teaching_skills=3">3</a><a href = "/post.php?id=%id%&teaching_skills=4">4</a><a href = "/post.php?id=%id%&teaching_skills=5">5</a> 							%оценкаУ% (%количествоУ% голосов)</td></tr>
-				<tr><td>В общении				<td><a href = "/post.php?id=%id%&communication_skills=1">1</a><a href = "/post.php?id=%id%&communication_skills=2">2</a><a href = "/post.php?id=%id%&communication_skills=3">3</a><a href = "/post.php?id=%id%&communication_skills=4">4</a><a href = "/post.php?id=%id%&communication_skills=5">5</a> 	%оценкаВ% (%количествоВ% голосов)</td></tr>
-				<tr><td>Халявность				<td><a href = "/post.php?id=%id%&easiness=1">1</a><a href = "/post.php?id=%id%&easiness=2">2</a><a href = "/post.php?id=%id%&easiness=3">3</a><a href = "/post.php?id=%id%&easiness=4">4</a><a href = "/post.php?id=%id%&easiness=5">5</a> 																%оценкаХ% (%количествоХ% голосов)</td></tr>
-				<tr><td>Общая Оценка			<td><a href = "/post.php?id=%id%&assessment=1">1</a><a href = "/post.php?id=%id%&assessment=2">2</a><a href = "/post.php?id=%id%&assessment=3">3</a><a href = "/post.php?id=%id%&assessment=4">4</a><a href = "/post.php?id=%id%&assessment=5">5</a> 													%оценкаО% (%количествоО% голосов)</td></tr>
+				<tr><td>Знания</td>				<td><a href = "/post.php?id=%id%&knowledge=1"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&knowledge=2"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&knowledge=3"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&knowledge=4"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&knowledge=5"><span><img src="star1.png"><span></a> 														%оценкаЗ% (%количествоЗ% голосов)</td></tr>
+				<tr><td>Умение преподавать		<td><a href = "/post.php?id=%id%&teaching_skills=1"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&teaching_skills=2"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&teaching_skills=3"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&teaching_skills=4"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&teaching_skills=5"><span><img src="star1.png"><span></a> 							%оценкаУ% (%количествоУ% голосов)</td></tr>
+				<tr><td>В общении				<td><a href = "/post.php?id=%id%&communication_skills=1"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&communication_skills=2"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&communication_skills=3"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&communication_skills=4"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&communication_skills=5"><span><img src="star1.png"><span></a> 	%оценкаВ% (%количествоВ% голосов)</td></tr>
+				<tr><td>Халявность				<td><a href = "/post.php?id=%id%&easiness=1"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&easiness=2"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&easiness=3"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&easiness=4"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&easiness=5"><span><img src="star1.png"><span></a> 																%оценкаХ% (%количествоХ% голосов)</td></tr>
+				<tr><td>Общая Оценка			<td><a href = "/post.php?id=%id%&assessment=1"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&assessment=2"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&assessment=3"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&assessment=4"><span><img src="star1.png"><span></a><a href = "/post.php?id=%id%&assessment=5"><span><img src="star1.png"><span></a> 													%оценкаО% (%количествоО% голосов)</td></tr>
 				</table>
 				</div>
 			</td></tr>

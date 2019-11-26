@@ -7,6 +7,7 @@
 	$str = str_replace ( "&lt;" , "<" , $str );
     $str = str_replace ( "&gt;" , ">" , $str );
     $str = str_replace ( "&quot;" , '"' , $str );
+    $str = str_replace ( "%rand%" , rand(0, 10000) , $str );
 
 
     $host = 'localhost';
