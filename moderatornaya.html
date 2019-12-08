@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css?%rand%">
+	<title></title>
+</head>
+<body>
+	<span class = 'topmenu'>
+		<span class = 'el'><a href = '/library.php'>Главная</a></span>
+		<span class = 'el'></span>
+		<span class = 'el'>Модераторная</span>
+
+		<div class = "username">
+			<span>
+			<form action = "/search.php">
+				<input type="text" name="request" placeholder="Поиск">
+				<input type="submit" hidden="">
+			</form></span>
+		%username%</div>
+	</span>
+		<h1>Модераторная</h1>
+		<span>
+			<h2>Ждут модерации %n% новых статей</h2>
+			%Статьи%
+		</span>
+		<span style = "margin-left: 50px">
+			<h2>Ждут модерации %n1% редактированных статей</h2>
+			%Редактированные cтатьи%
+		</span>
+</body>
+</html>

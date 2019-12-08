@@ -11,7 +11,6 @@
     if($_GET['exit']){
 		$_SESSION = array();
     }
-
 ?>
 <?php
 	$host = 'localhost';
@@ -160,18 +159,23 @@
         $comment = str_replace ( "&gt;" , ">" , $comment );
         $comment = str_replace ( "&quot;" , '"' , $comment );
         $sqlUsr = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $result2['userid']);
+
         $comment = str_replace ( "%text%" , $result2['text'] , $comment);
         $comment = str_replace ( "%date%" , $result2['trn_date'] , $comment);
-        
+
         $userid = mysqli_fetch_array($sqlUsr)['username'];
-        if($userid == 'Аноним'){
+        if ($userid == ""){
+            $userid = "Удаленный пользователь";
+        }
+
+        if(($userid == 'Аноним') ||($userid == 'Удаленный пользователь')){
             $comment = str_replace ( "%src%" , "https://api.adorable.io/avatars/180/". $result2['trn_date'], $comment);
         } else {
             $comment = str_replace ( "%src%" , "https://api.adorable.io/avatars/180/". sha1($userid), $comment);
         }
 
-        $sqlUsr = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $result2['userid']);
-        $comment = str_replace ( "%username%" , mysqli_fetch_array($sqlUsr)['username'] , $comment);
+        
+        $comment = str_replace ( "%username%" , $userid , $comment);
     }
 
 

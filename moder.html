@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+	<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 	<link rel='stylesheet' href='style.css?%rand%'>
 	<title></title>
 </head>
 <body>
+	
 	<span class = 'topmenu'>
-		<span class = 'el'><a href = '/library.php'>Главная</a></span> <span class = 'el'>Добавить</span>
+		<span class = 'el'><a href = '/library.php'>Главная</a></span>
+		<span class = 'el'><a href = '/moderatornaya.php'>Назад</a></span>
+		<span class = 'el'>Редактировать</span>
+
 		<div class = "username">
 			<span>
 			<form action = "/search.php">
@@ -15,10 +21,12 @@
 			</form></span>
 		%username%</div>
 	</span>
-		<form action = 'add.php' method = 'POST' enctype='multipart/form-data'>
-			<span class = 'description'>
-		<img id = "preview" src='/img/whoisit.png' alt = ''><br>
-		<input id = "id_files" type = 'file' name = 'img' accept='image/png'><br>
+
+
+	<form action = '' method = 'POST' enctype='multipart/form-data'>
+	<span class = 'description'>
+		<img id = "preview" src='%src%' alt = '%alt%'><br>
+		<input id = 'id_files' type = 'file' name = 'img' accept='image/png'><br>
 		Кафедра : <form action = 'add.php' method = 'POST' enctype='multipart/form-data'>
 			<select name = "department">
 			<option value = "Неизвестно">Не выбрано</option>
@@ -150,12 +158,13 @@
 		</select>
 	</span>
 	<span class = 'content'>
-		%warning%
 		<h1><input type = 'text' name = 'name' value = '%name%'></h1>
 		<textarea name = 'Text' cols = '100' rows = '40'>%text%</textarea>
-		<p><input type='submit'  name = 'submit' value='Отправить на модерацию'></p>
+		<p><input type='submit'  name = 'submit' value='Опубликовать'><input type='submit'  name = 'no' value='Удалить'></p>
 	</span>
-		</form>
+	</form>
+
+
 	<script>
         var fileField = document.getElementById('id_files');
 		var preview = document.getElementById('preview');
@@ -170,7 +179,6 @@
             reader.readAsDataURL(event.target.files[x]);
         })(x);
     }
-	}, false);
+}, false);
     </script>
 </body>
-</html>

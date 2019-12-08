@@ -12,7 +12,22 @@
     if($_SESSION['id'] != NULL){
     	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
     	$result1 = mysqli_fetch_array($sql);
-		$str = str_replace ( "%username%" , "<a href = ''>". $result1['username'] . "</a><a href = '/library.php?exit=Выход'>выход</a>" , $str );
+      $user = "<a href = ''>". $result1['username'] . "</a><a href = '/library.php?exit=Выход'>выход</a>";
+      if($result1['roots'] == '2'){
+        $user .= "<a href = 'admin.php'>Админочная</a>";
+      }
+      if($result1['roots'] == '1'){
+
+        $host = 'localhost';
+        $usr = 'root';
+        $pass = 'admin';
+        $db_name = 'post';
+        $linkMod = mysqli_connect($host, $usr, $pass, $db_name);
+        $sql = mysqli_query($linkMod, "SELECT * FROM `moderation`");
+        $n = mysqli_num_rows($sql);
+        $user .= "<a href = 'moderatornaya.php'>Модераторная(".$n.")</a>";
+      }
+		$str = str_replace ( "%username%" , $user , $str );
 	} else {
 		$str = str_replace('%username%', "<a href = '/login.php'>Войти</a> <a href = 'register'>Регистрация</a>", $str);
     	$_SESSION['url'] = '/library.php';

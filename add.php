@@ -67,39 +67,27 @@
 	
 
     if(($name != "") && ($text != "") && ($_POST['submit'] != NULL)){
-    	if($_FILES['img']['size'] > 3*1024*1024){
-    		echo "Размер картинки превышает 3 Мб";
-    	} else {
     		echo("Успех");
     		$sql = mysqli_query($link, "SELECT * FROM `posts`");
     		//echo($_FILES['img'] != NULL);
 
-    		$sql = mysqli_query($link, "INSERT INTO `posts` (`text`, `name`, `userid`, `department`) VALUES ('{$text}', '{$name}', '{$_SESSION['id']}', '{$_POST['department']}')");
+    		$sql = mysqli_query($link, "INSERT INTO `moderation` (`text`, `name`, `userid`, `department`) VALUES ('{$text}', '{$name}', '{$_SESSION['id']}', '{$_POST['department']}')");
             
 
  	   		if ($_FILES['img'] != NULL){
- 	   			$sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY id DESC LIMIT 1");
-    			move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . (mysqli_fetch_array($sql)['id']) . ".png");
+ 	   			$sql = mysqli_query($link, "SELECT * FROM `moderation` ORDER BY id DESC LIMIT 1");
+    			move_uploaded_file($_FILES["img"]["tmp_name"], "mimg/" . (mysqli_fetch_array($sql)['id']) . ".png");
     		}	
 
     		$sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY id DESC LIMIT 1");
     		$postid = mysqli_fetch_array($sql)['id'];
 			echo 'postid= ' . $postid;
 
-
-			$query ="CREATE Table IF NOT EXISTS `$postid` (
- 				`id` int(11) NOT NULL AUTO_INCREMENT,
- 				`userid` int(11) NOT NULL,
- 				`text` varchar(512) NOT NULL,
- 				`trn_date` datetime NOT NULL,
- 				PRIMARY KEY (`id`))";
-
-    		$sql = mysqli_query($linkComment, $query);
-    		$new_url = '/post.php?id=' . $postid;
+    		$new_url = '/library.php';
 			header('Location: '.$new_url);
 			ob_end_flush();
     		exit();
-    	}
+    	
 	} else {
 		$warning = 'Имя или текст не введен';
 	}
