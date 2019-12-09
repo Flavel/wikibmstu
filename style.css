@@ -84,3 +84,18 @@ select{
 .delete {
 	width : 100px;
 }
+.avatar {
+	width: 95%;
+}
+.user {
+	width: 35%;
+}
+.notifications{
+	width: 60%;
+	margin-left: 3%;
+	float: right;
+}
+.notification{
+	background-clip: border-box;
+	padding-bottom: 10px;
+}

@@ -37,7 +37,9 @@
     if($_SESSION['id'] != NULL){
     	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
     	$result1 = mysqli_fetch_array($sql);
-		$str = str_replace ( "%username%" , "<a href = ''>". $result1['username'] . "</a><a href = '/post.php?exit=Выйти&id=". $_GET['id'] . "'>выход</a>" , $str );
+        $sqlnot = mysqli_query($linkUsr, "SELECT * FROM `notifications` WHERE `new` = 1 AND `userid` = " . $_SESSION['id']);
+        $notifications = mysqli_num_rows($sqlnot);
+		$str = str_replace ( "%username%" , "<a href = '/account.php?id=".$_SESSION['id']."'>". $result1['username'] . "(".$notifications.")</a><a href = '/post.php?exit=Выйти&id=". $_GET['id'] . "'>выход</a>" , $str );
 	} else {
 		$str = str_replace('%username%', "<a href = '/login.php'>Войти</a> <a href = 'register'>Регистрация</a>", $str);
     	$_SESSION['url'] = '/post.php?id='.$_GET['id'];
@@ -164,8 +166,12 @@
         $comment = str_replace ( "%date%" , $result2['trn_date'] , $comment);
 
         $userid = mysqli_fetch_array($sqlUsr)['username'];
+
+        $sqlUsr = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $result2['userid']);
+        $resultUsr = mysqli_fetch_array($sqlUsr);
         if ($userid == ""){
             $userid = "Удаленный пользователь";
+            $resultUsr['id'] = 22;
         }
 
         if(($userid == 'Аноним') ||($userid == 'Удаленный пользователь')){
@@ -175,7 +181,7 @@
         }
 
         
-        $comment = str_replace ( "%username%" , $userid , $comment);
+        $comment = str_replace ( "%username%" , "<a href = '/account.php?id=" . $resultUsr['id'] . "'>" . $userid . "</a>" , $comment);
     }
 
 

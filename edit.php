@@ -17,16 +17,37 @@
     $db_name = 'post';
     $link = mysqli_connect($host, $user, $pass, $db_name);
 
+    $host = 'localhost';
+    $user = 'root';
+    $pass = 'admin';
+    $db_name = 'auth';
+    $linkUsr = mysqli_connect($host, $user, $pass, $db_name);
+
     if($_POST['submit']){
 
-    	if ($_FILES['img'] != NULL){
-    		move_uploaded_file($_FILES["img"]["tmp_name"], "img/" . $_GET['id'] . ".png");
-    	}	
+    	$sql = mysqli_query($link, "SELECT * FROM `posts`");
+            //echo($_FILES['img'] != NULL);
+            $sql = mysqli_query($link, "SELECT * FROM `posts` WHERE id = '{$_GET['id']}'");
+            $result = mysqli_fetch_array($sql);
 
-    	$sql = mysqli_query($link, "UPDATE `posts` SET `name` = '" . $_POST['name'] . "', `text` ='" . $_POST['Text'] . "', `department` = '" . $_POST['department'] . "' WHERE `id` = '".$_GET['id']."'");
-	 	$new_url = '/post.php?id=' . $_GET['id'];
- 	 	header('Location: '.$new_url);
-	 	ob_end_flush();
+            $sql = mysqli_query($linkUsr, "INSERT INTO `notifications`(`userid`, `text`) VALUES (" . $_SESSION['id'] . ", 'Ваши правки(". $result['name'] .") отправлены на модерацию.')");
+
+            $sql = mysqli_query($link, "INSERT INTO `moderation` (`text`, `name`, `userid`, `department`, `edit`) VALUES ('{$_POST['Text']}', '{$_POST["name"]}', '{$_SESSION['id']}', '{$_POST["department"]}', '{$_GET['id']}')");
+            
+
+            if ($_FILES['img'] != NULL){
+                $sql = mysqli_query($link, "SELECT * FROM `moderation` ORDER BY id DESC LIMIT 1");
+                move_uploaded_file($_FILES["img"]["tmp_name"], "mimg/" . (mysqli_fetch_array($sql)['id']) . ".png");
+            }   
+
+            $sql = mysqli_query($link, "SELECT * FROM `posts` ORDER BY id DESC LIMIT 1");
+            $postid = mysqli_fetch_array($sql)['id'];
+            echo 'postid= ' . $postid;
+
+            $new_url = '/post.php?id=' . $_GET['id'];
+            header('Location: '.$new_url);
+            ob_end_flush();
+            exit();
     }
 
 ?>
@@ -44,16 +65,12 @@
 
     $result = mysqli_fetch_array($sql);
 
-
-    $host = 'localhost';
-    $user = 'root';
-    $pass = 'admin';
-    $db_name = 'auth';
-    $linkUsr = mysqli_connect($host, $user, $pass, $db_name);
     if($_SESSION['id'] != NULL){
     	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
     	$result1 = mysqli_fetch_array($sql);
-		$str = str_replace ( "%username%" , "<a href = ''>". $result1['username'] . "</a><a href = '/post.php?exit=Выйти&id=". $_GET['id'] . "'>выход</a>" , $str );
+        $sqlnot = mysqli_query($linkUsr, "SELECT * FROM `notifications` WHERE `new` = 1 AND `userid` = " . $_SESSION['id']);
+        $notifications = mysqli_num_rows($sqlnot);
+		$str = str_replace ( "%username%" , "<a href = '/account.php?id=".$_SESSION['id']."'>". $result1['username'] . "(".$notifications.")</a><a href = '/post.php?exit=Выйти&id=". $_GET['id'] . "'>выход</a>" , $str );
 	} else {
 		$str = str_replace('%username%', "<a href = '/login.php'>Войти</a> <a href = 'register'>Регистрация</a>", $str);
     	$_SESSION['url'] = '/edit.php?id='.$_GET['id'];

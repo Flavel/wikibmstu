@@ -12,7 +12,10 @@
     if($_SESSION['id'] != NULL){
     	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
     	$result1 = mysqli_fetch_array($sql);
-      $user = "<a href = ''>". $result1['username'] . "</a><a href = '/library.php?exit=Выход'>выход</a>";
+
+      $sqlnot = mysqli_query($linkUsr, "SELECT * FROM `notifications` WHERE `new` = 1 AND `userid` = " . $_SESSION['id']);
+      $notifications = mysqli_num_rows($sqlnot);
+      $user = "<a href = '/account.php?id=".$_SESSION['id']."'>". $result1['username'] . "(".$notifications.")</a><a href = '/library.php?exit=Выход'>выход</a>";
       if($result1['roots'] == '2'){
         $user .= "<a href = 'admin.php'>Админочная</a>";
       }

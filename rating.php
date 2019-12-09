@@ -17,7 +17,9 @@
     if($_SESSION['id'] != NULL){
     	$sql = mysqli_query($linkUsr, "SELECT * FROM users WHERE `id` = ".  $_SESSION['id']);
     	$result1 = mysqli_fetch_array($sql);
-		$str = str_replace ( "%username%" , "<a href = ''>". $result1['username'] . "</a><a href = '/rating.php?exit=Выход'>выход</a>" , $str );
+    	$sqlnot = mysqli_query($linkUsr, "SELECT * FROM `notifications` WHERE `new` = 1 AND `userid` = " . $_SESSION['id']);
+      	$notifications = mysqli_num_rows($sqlnot);
+		$str = str_replace ( "%username%" , "<a href = '/account.php?id=".$_SESSION['id']."'>". $result1['username'] . "(".$notifications.")</a><a href = '/rating.php?exit=Выход'>выход</a>" , $str );
 	} else {
 		$str = str_replace('%username%', "<a href = '/login.php'>Войти</a> <a href = 'register'>Регистрация</a>", $str);
     	$_SESSION['url'] = '/library.php';

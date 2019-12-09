@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css?%rand%">
+	<title></title>
+</head>
+<body>
+	<span class = 'topmenu'>
+		<span class = 'el'><a href = '/library.php'>Главная</a></span>
+		<span class = 'el'>Личный кабинет</span>
+
+		<div class = "username">
+			<span>
+			<form action = "/search.php">
+				<input type="text" name="request" placeholder="Поиск">
+				<input type="submit" hidden="">
+			</form></span>
+		%username%</div>
+	</span>
+	<div class = "content">
+		<span class = "user">
+			<div><h2>%usrname%</h2></div>
+			<img class = "avatar" src="%src%">
+			%Действия%
+		</span>
+		<span class = "notifications">
+			<h2> Уведомления </h2>
+			%Лента уведомлений%
+		</span>
+	</div>
+</body>
+</html>
